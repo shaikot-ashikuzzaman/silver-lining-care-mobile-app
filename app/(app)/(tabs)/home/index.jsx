@@ -2,6 +2,7 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { FlatList, Image, Pressable, View } from "react-native";
 
+import CarerScheduleCard from "../../../../components/cards/carer-schedule-card";
 import CustomerScheduleCard from "../../../../components/cards/customer-schedule-card";
 import HorizontalLine from "../../../../components/horizontal-line";
 import Icon from "../../../../components/icon";
@@ -157,43 +158,76 @@ export default function Index() {
                                 </View>
                             </View>
                         ) : (
-                            <FlatList
-                                showsVerticalScrollIndicator={false}
-                                contentContainerStyle={{ flexGrow: 1, paddingBottom: 60 }}
-                                keyExtractor={(item) => item.id?.toString()}
-                                data={SHIFTS}
-                                renderItem={({ item }) => {
-                                    return (
-                                        <Pressable
-                                            className="bg-white p-4 rounded-md mb-4"
-                                            onPress={() => {
-                                                router.push({
-                                                    pathname: "/(app)/home/[id]",
-                                                    params: {
-                                                        customerName: item.customerName,
-                                                        customerPhone: item.customerPhone,
-                                                        shift: item.shift,
-                                                    },
-                                                });
-                                            }}
-                                        >
-                                            <Typography
-                                                variant="subtitle1"
-                                                className="text-indigo-500"
-                                            >
-                                                {item.customerName}
-                                            </Typography>
-                                            <Typography>
-                                                Contact No: {item.customerPhone}
-                                            </Typography>
-                                            <Typography className="mt-2" variant="subtitle3">
-                                                Shift
-                                            </Typography>
-                                            <Typography>{item.shift}</Typography>
-                                        </Pressable>
-                                    );
-                                }}
-                            />
+                            <View className="">
+                                <Typography variant="h1">Accept Booking</Typography>
+                                <Typography variant="">
+                                    Accept booking that matches with your schedule
+                                </Typography>
+                                <View className="flex-row flex-1 gap-4 mb-10 mt-4">
+                                    <Button
+                                        title="Available Booking"
+                                        className="flex-1 bg-teal-500"
+                                        titleClassName="text-xs"
+                                        onPress={() => {
+                                            router.push("/home/accept-booking");
+                                        }}
+                                    />
+                                    <Button
+                                        title="Create Schedule"
+                                        className="flex-1"
+                                        titleClassName="text-xs"
+                                        onPress={() => {
+                                            router.push("/home/create");
+                                        }}
+                                    />
+                                </View>
+
+                                <HorizontalLine className="" />
+
+                                <View className="mt-10">
+                                    <Typography variant="h1">Booked Schedule</Typography>
+                                    <CarerScheduleCard
+                                        imageSource={require("../../../../assets/images/customer-1.jpg")}
+                                        time="9:30 am, 08 April"
+                                        name="Catherine Dsourza"
+                                        rate={350}
+                                        rating={4.9}
+                                        title="Need Emergency Medication"
+                                        type="Medication Support"
+                                        address="12 Homestead Rd"
+                                    />
+                                    <CarerScheduleCard
+                                        imageSource={require("../../../../assets/images/customer-2.jpg")}
+                                        time="10:00 pm, 09 April"
+                                        name="John Doe"
+                                        rate={500}
+                                        rating={5.0}
+                                        title="Let's Cure Me"
+                                        type="Home Care"
+                                        address="1/154 Koroit St"
+                                    />
+                                    <CarerScheduleCard
+                                        imageSource={require("../../../../assets/images/customer-1.jpg")}
+                                        time="9:00 am, 12 April"
+                                        name="Catherine Dsourza"
+                                        rate={350}
+                                        rating={4.9}
+                                        title="Need Emergency Medication"
+                                        type="Medication Support"
+                                        address="1042 Sydney Rd"
+                                    />
+                                    <CarerScheduleCard
+                                        imageSource={require("../../../../assets/images/customer-2.jpg")}
+                                        time="10:00 pm, 17 April"
+                                        name="John Doe"
+                                        rate={500}
+                                        rating={5.0}
+                                        title="Let's Cure Me"
+                                        type="Home Care"
+                                        address="Lorem ipsum"
+                                    />
+                                </View>
+                            </View>
                         )}
                         {/* <View className="pt-4 items-center">
                             <Button
@@ -226,54 +260,4 @@ export default function Index() {
             </View>
         </Layout>
     );
-}
-
-{
-    /* <Typography variant="display1">
-                    {isCustomer ? "Already Requested Care" : "Available Shifts"}
-                </Typography> */
-}
-
-{
-    /* <FlatList
-                                showsVerticalScrollIndicator={false}
-                                contentContainerStyle={{ flexGrow: 1, paddingBottom: 60 }}
-                                keyExtractor={(item) => item.id?.toString()}
-                                data={DATA}
-                                renderItem={({ item }) => {
-                                    return (
-                                        <Pressable
-                                            className="bg-white p-4 rounded-md mb-4"
-                                            onPress={() => {
-                                                router.push({
-                                                    pathname: "/(app)/home/[id]",
-                                                    params: {
-                                                        preference: "Assistant Nurse",
-                                                        time: "12:20 AM",
-                                                        date: "22 March, 2024",
-                                                        carerName: item.carer.name,
-                                                        carerPhone: item.carer.phone,
-                                                    },
-                                                });
-                                            }}
-                                        >
-                                            <Typography
-                                                variant="subtitle1"
-                                                className="text-indigo-500"
-                                            >
-                                                {item.preference}
-                                            </Typography>
-                                            <Typography className="mt-2">
-                                                Carer: {item.carer.name}
-                                            </Typography>
-                                            <Typography>Contact No: {item.carer.phone}</Typography>
-                                            <Typography className="mt-2" variant="subtitle3">
-                                                Booked For
-                                            </Typography>
-                                            <Typography>Date: {item.date}</Typography>
-                                            <Typography>Time: {item.time}</Typography>
-                                        </Pressable>
-                                    );
-                                }}
-                            /> */
 }

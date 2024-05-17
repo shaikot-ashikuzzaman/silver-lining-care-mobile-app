@@ -2,6 +2,7 @@ import { Stack, Tabs, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ScrollView, TouchableOpacity, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 import DateTimeInput from "../../../../components/date-time-input";
 import TextInput from "../../../../components/text-inputs/text-input";
@@ -136,24 +137,28 @@ export default function HomeDetails() {
                 })}
             </ScrollView>
 
-            <Typography variant="h4" className="mt-6 mb-2">
-                Information
-            </Typography>
-            <View className="p-4 border border-neutral-200 rounded-lg">
-                <TextInput
-                    placeholder="Enter Title"
-                    control={control}
-                    name="firstName"
-                    label="Title"
-                />
-                <TextInput
-                    textarea
-                    placeholder="Please describe more about your needs."
-                    control={control}
-                    name="lastName"
-                    label="Description"
-                />
-            </View>
+            {isCustomer && (
+                <>
+                    <Typography variant="h4" className="mt-6 mb-2">
+                        Information
+                    </Typography>
+                    <View className="p-4 border border-neutral-200 rounded-lg">
+                        <TextInput
+                            placeholder="Enter Title"
+                            control={control}
+                            name="firstName"
+                            label="Title"
+                        />
+                        <TextInput
+                            textarea
+                            placeholder="Please describe more about your needs."
+                            control={control}
+                            name="lastName"
+                            label="Description"
+                        />
+                    </View>
+                </>
+            )}
             {/* <DateTimeInput
                 control={control}
                 name="date"
@@ -166,17 +171,36 @@ export default function HomeDetails() {
                 onPress={() => showDatePicker("date")}
                 label="Schedule Your Slot"
             /> */}
-            <View className="items-center">
-                <Button
-                    className="mt-14"
-                    onPress={() => {
-                        router.push("/home/payment");
-                    }}
-                    // className="w-full"
-                    title="Proceed to Payment"
-                    style={{ width: "100%" }}
-                />
-            </View>
+            {isCustomer ? (
+                <View className="items-center">
+                    <Button
+                        className="mt-14"
+                        onPress={() => {
+                            router.push("/home/payment");
+                        }}
+                        // className="w-full"
+                        title="Proceed to Payment"
+                        style={{ width: "100%" }}
+                    />
+                </View>
+            ) : (
+                <View className="items-center">
+                    <Button
+                        className="mt-14"
+                        onPress={() => {
+                            router.navigate("/home");
+                            Toast.show({
+                                type: "success",
+                                text1: "Your schedule is recorded",
+                                text2: "You will be notified when there is a match.",
+                            });
+                        }}
+                        // className="w-full"
+                        title="Confirm Schedule"
+                        style={{ width: "100%" }}
+                    />
+                </View>
+            )}
         </Layout>
     );
 }

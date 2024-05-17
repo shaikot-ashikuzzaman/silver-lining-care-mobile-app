@@ -18,6 +18,7 @@ export default function HomeLayout() {
             <Stack.Screen name="create" options={{ headerShown: false }} />
             <Stack.Screen name="payment" options={{ headerShown: false }} />
             <Stack.Screen name="create-payment" options={{ headerShown: false }} />
+            <Stack.Screen name="accept-booking" options={{ headerShown: false }} />
         </Stack>
     );
 }
